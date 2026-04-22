@@ -33,7 +33,15 @@ export interface SimulateResult {
     cpuInsns: string;
     memBytes: string;
   };
+  /** Resource fee calculated from simulation cost and network fee parameters */
+  resourceFee?: string;
   error?: string;
+  /** Contract ID that was not found (if error is "Contract not found") */
+  contractId?: string;
+  /** Required signers for multi-signature transactions */
+  requiredSigners?: string[];
+  /** Threshold for multi-signature transactions */
+  threshold?: number;
   raw?: StellarSdk.SorobanRpc.Api.SimulateTransactionResponse;
 }
 
