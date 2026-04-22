@@ -6,6 +6,7 @@ import {
   type FootprintEntry,
 } from "./footprintParser";
 import { optimizeFootprint } from "./optimizer";
+import { calculateResourceFee } from "./feeEstimator";
 
 export interface TtlInfo {
   liveUntilLedger: number;
@@ -33,7 +34,15 @@ export interface SimulateResult {
     cpuInsns: string;
     memBytes: string;
   };
+  /** Resource fee calculated from simulation cost and network fee parameters */
+  resourceFee?: string;
   error?: string;
+  /** Contract ID that was not found (if error is "Contract not found") */
+  contractId?: string;
+  /** Required signers for multi-signature transactions */
+  requiredSigners?: string[];
+  /** Threshold for multi-signature transactions */
+  threshold?: number;
   raw?: StellarSdk.SorobanRpc.Api.SimulateTransactionResponse;
 }
 
@@ -135,6 +144,13 @@ export async function simulateTransaction(
   // Fetch TTL information
   const ttl = await fetchTtlInfo(server, allXdrEntries);
 
+  // Calculate resource fee using live network parameters
+  const resourceFee = await calculateResourceFee(
+    response.cost?.cpuInsns ?? "0",
+    response.cost?.memBytes ?? "0",
+    network,
+  );
+
   return {
     success: true,
     footprint: {
@@ -149,6 +165,9 @@ export async function simulateTransaction(
       cpuInsns: response.cost?.cpuInsns ?? "0",
       memBytes: response.cost?.memBytes ?? "0",
     },
+    resourceFee,
+    requiredSigners,
+    threshold,
     raw: response,
   };
 }
