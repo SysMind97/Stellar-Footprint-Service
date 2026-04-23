@@ -5,17 +5,20 @@ import { Network } from "../config/stellar";
 import { footprintDiff } from "../services/footprintDiff";
 import metrics from "../middleware/metrics";
 import { validateXdr, type XdrInputType } from "../services/validator";
+import { recordFailure } from "../middleware/bruteForce";
 
 export async function simulate(req: Request, res: Response): Promise<void> {
   const { xdr, network } = req.body as { xdr?: string; network?: Network };
 
   if (!xdr) {
+    recordFailure(req.ip || req.socket.remoteAddress || "unknown");
     res.status(400).json({ error: "Missing required field: xdr" });
     return;
   }
 
   // Validate network parameter
   if (network && network !== "mainnet" && network !== "testnet") {
+    recordFailure(req.ip || req.socket.remoteAddress || "unknown");
     res
       .status(400)
       .json({ error: "Invalid network. Use 'testnet' or 'mainnet'" });
@@ -32,6 +35,10 @@ export async function simulate(req: Request, res: Response): Promise<void> {
 
     // Record simulation metrics
     metrics.recordSimulation(net, result.success);
+
+    if (!result.success) {
+      recordFailure(req.ip || req.socket.remoteAddress || "unknown");
+    }
 
     if (result.success) {
       const body = JSON.stringify(result);
@@ -55,6 +62,7 @@ export async function simulate(req: Request, res: Response): Promise<void> {
 
     // Record failed simulation
     metrics.recordSimulation(net, false);
+    recordFailure(req.ip || req.socket.remoteAddress || "unknown");
 
     res.status(500).json({ error: message });
   } finally {
