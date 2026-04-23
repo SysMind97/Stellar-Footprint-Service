@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { simulate, footprintDiffController, validate } from "./controllers";
+import {
+  simulate,
+  footprintDiffController,
+  validate,
+  restore,
+} from "./controllers";
 
 const router = Router();
 
@@ -11,5 +16,8 @@ router.post("/footprint/diff", footprintDiffController);
 
 // POST /validate — accepts { xdr, type } and returns parse result without simulating
 router.post("/validate", validate);
+
+// POST /restore — accepts { xdr, network } and returns restoreXdr when restoration is needed
+router.post("/restore", restore);
 
 export default router;
