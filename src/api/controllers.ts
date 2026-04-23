@@ -11,6 +11,7 @@ import {
   DEFAULT_NETWORK,
   ERROR_MESSAGES,
   HTTP_STATUS,
+  BATCH_MAX_SIZE,
 } from "../constants";
 import { version } from "../../package.json";
 
