@@ -483,6 +483,16 @@ export async function simulateTransaction(
   signal?: AbortSignal,
   ledgerSequence?: number,
 ): Promise<SimulateResult> {
+<<<<<<< ours
+=======
+  const cacheKey = buildCacheKey(xdr, network);
+  const cached = simulationCache.get(cacheKey);
+  if (cached) {
+    return { ...cached, cacheHit: true };
+  }
+
+  const server = getRpcServer(network);
+>>>>>>> theirs
   const { networkPassphrase } = getNetworkConfig(network);
   const server = getRpcServer(network);
 
@@ -607,6 +617,7 @@ export async function simulateTransaction(
       readWrite: footprint.readWrite().map((e) => e.toXDR("base64")),
     };
 
+<<<<<<< ours
     // Parse footprint entries to extract contract IDs and classify types
     const parsedFootprint = parseFootprint(rawFootprint);
 
