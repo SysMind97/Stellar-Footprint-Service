@@ -1,60 +1,11 @@
-<<<<<<< ours
-<<<<<<< ours
-# Base configuration — extended by docker-compose.dev.yml and docker-compose.prod.yml
-# Usage:
-#   Dev:  docker compose -f docker-compose.yml -f docker-compose.dev.yml up
-#   Prod: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-=======
 version: '3.8'
->>>>>>> theirs
-=======
 version: '3.8'
->>>>>>> theirs
 
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-<<<<<<< ours
-<<<<<<< ours
-    environment:
-      - PORT=3000
-      - TESTNET_RPC_URL=${TESTNET_RPC_URL:-https://soroban-testnet.stellar.org}
-      - MAINNET_RPC_URL=${MAINNET_RPC_URL}
-      - TESTNET_SECRET_KEY=${TESTNET_SECRET_KEY}
-      - MAINNET_SECRET_KEY=${MAINNET_SECRET_KEY}
-      - SIMULATE_TIMEOUT_MS=${SIMULATE_TIMEOUT_MS:-30000}
-      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
-    depends_on:
-      redis:
-        condition: service_healthy
-    restart: unless-stopped
-    networks:
-      - app_net
-
-  redis:
-    image: redis:7-alpine
-    restart: unless-stopped
-    networks:
-      - app_net
-    volumes:
-      - redis_data:/data
-    command: redis-server --appendonly yes
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
-
-volumes:
-  redis_data:
-
-networks:
-  app_net:
-=======
-=======
->>>>>>> theirs
     ports:
       - "3000:3000"
     environment:
@@ -76,8 +27,4 @@ networks:
 
 networks:
   app-network:
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
     driver: bridge

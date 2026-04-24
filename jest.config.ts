@@ -9,45 +9,10 @@ const config: Config = {
     "**/?(*.)+(spec|test).+(ts|tsx|js)",
   ],
   transform: {
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-    "^.+\\.(ts|tsx)$": "ts-jest",
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
     "^.+\\.(ts|tsx)$": [
       "ts-jest",
       { tsconfig: "tsconfig.test.json", diagnostics: false },
     ],
-<<<<<<< ours
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
-    "^.+\\.(ts|tsx)$": "ts-jest",
->>>>>>> theirs
-=======
-    "^.+\\.(ts|tsx)$": "ts-jest",
->>>>>>> theirs
-=======
-    "^.+\\.(ts|tsx)$": "ts-jest",
->>>>>>> theirs
-=======
-    "^.+\\.(ts|tsx)$": "ts-jest",
->>>>>>> theirs
   },
   collectCoverage: true,
   collectCoverageFrom: [
@@ -67,41 +32,11 @@ const config: Config = {
   },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-=======
->>>>>>> theirs
     "^@api/(.*)$": "<rootDir>/src/api/$1",
     "^@services/(.*)$": "<rootDir>/src/services/$1",
     "^@config/(.*)$": "<rootDir>/src/config/$1",
     "^@middleware/(.*)$": "<rootDir>/src/middleware/$1",
     "^@utils/(.*)$": "<rootDir>/src/utils/$1",
-<<<<<<< ours
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
   },
 };
 
