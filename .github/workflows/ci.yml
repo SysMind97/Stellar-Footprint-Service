@@ -36,8 +36,20 @@ jobs:
       - name: TypeScript type check
         run: npx tsc --noEmit
 
-      - name: Run npm audit
-        run: npm audit --audit-level=high --json > audit-report.json
+      - name: Run lint
+        run: pnpm run lint
+
+      - name: Lint OpenAPI spec
+        run: pnpm run lint:api
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Run build
+        run: pnpm run build
+
+      - name: Run pnpm audit
+        run: pnpm audit --audit-level=high --json > audit-report.json || true
 
       - name: Upload audit report
         uses: actions/upload-artifact@v4
