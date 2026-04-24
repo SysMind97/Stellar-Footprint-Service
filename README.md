@@ -83,6 +83,8 @@ For a detailed explanation of each component and design decisions, see [docs/arc
 
 ### Quick Start
 
+> **Prerequisites:** Node.js >= 18.0.0. Use [nvm](https://github.com/nvm-sh/nvm) and run `nvm use` to automatically switch to the correct version.
+
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/stellar-footprint-service.git
