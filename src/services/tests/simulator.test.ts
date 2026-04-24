@@ -1,6 +1,6 @@
-<<<<<<< ours
-<<<<<<< ours
-import { simulateTransaction } from "../simulator";
+import * as StellarSdk from "@stellar/stellar-sdk";
+
+import { getRpcServer } from "../../config/stellar";
 import {
   SOROBAN_INVOKE_XDR,
   CLASSIC_PAYMENT_XDR,
@@ -8,17 +8,9 @@ import {
   INVALID_BASE64_XDR,
   INVALID_XDR_BYTES,
 } from "../../tests/fixtures/xdr";
-=======
-import { simulateTransaction } from "@services/simulator";
->>>>>>> theirs
-=======
-import { simulateTransaction } from "@services/simulator";
->>>>>>> theirs
+import { simulateTransaction } from "../simulator";
 
 // ── Mocks ────────────────────────────────────────────────────────────────────
-
-// jest.mock factories are hoisted before variable declarations, so all mock
-// functions must be created inside the factory (not referenced from outside).
 
 jest.mock("@config/stellar", () => ({
   getNetworkConfig: jest.fn().mockReturnValue({
@@ -29,48 +21,6 @@ jest.mock("@config/stellar", () => ({
   getRpcServer: jest.fn(),
 }));
 
-jest.mock("@stellar/stellar-sdk", () => ({
-  TransactionBuilder: {
-    fromXDR: jest.fn().mockReturnValue({}),
-  },
-  SorobanRpc: {
-    Server: jest.fn(),
-    Api: {
-      isSimulationError: jest.fn(),
-      isSimulationRestore: jest.fn(),
-    },
-  },
-  Networks: {
-    TESTNET: "Test SDF Network ; September 2015",
-    PUBLIC: "Public Global Stellar Network ; September 2015",
-  },
-  xdr: {
-    LedgerKey: {
-      fromXDR: jest.fn().mockReturnValue({}),
-      account: jest.fn().mockReturnValue({}),
-      contractCode: jest.fn().mockReturnValue({}),
-    },
-    AccountId: { fromString: jest.fn().mockReturnValue({}) },
-  },
-}));
-
-import * as StellarSdk from "@stellar/stellar-sdk";
-import { getRpcServer } from "../../config/stellar";
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-// Use the shared fixture; kept as an alias so existing tests are unchanged.
-const DUMMY_XDR = INVALID_XDR_BYTES;
-
-// Stable mock server — getRpcServer always returns this same object.
-const mockSimulateTransaction = jest.fn();
-const mockGetLedgerEntries = jest.fn();
-const mockServer = {
-  simulateTransaction: mockSimulateTransaction,
-  getLedgerEntries: mockGetLedgerEntries,
-};
-
-// Minimal XDR footprint builder helpers
 const mockFootprint = {
   readOnly: jest.fn().mockReturnValue([]),
   readWrite: jest.fn().mockReturnValue([]),
@@ -78,43 +28,15 @@ const mockFootprint = {
 const mockResources = jest
   .fn()
   .mockReturnValue({ footprint: () => mockFootprint });
-const mockBuild = jest
-  .fn()
-  .mockReturnValue({
-    resources: mockResources,
-    auth: jest.fn().mockReturnValue([]),
-  });
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-=======
->>>>>>> theirs
 const mockBuild = jest.fn().mockReturnValue({
   resources: mockResources,
   auth: jest.fn().mockReturnValue([]),
 });
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
+const mockBuild = jest.fn().mockReturnValue({
+  resources: mockResources,
+  auth: jest.fn().mockReturnValue([]),
+});
 const mockTransactionData = { build: mockBuild };
-
-const mockTx = {};
 
 jest.mock("@stellar/stellar-sdk", () => {
   const isSimulationError = jest.fn();
@@ -122,7 +44,7 @@ jest.mock("@stellar/stellar-sdk", () => {
 
   return {
     TransactionBuilder: {
-      fromXDR: jest.fn().mockReturnValue(mockTx),
+      fromXDR: jest.fn().mockReturnValue({}),
     },
     SorobanRpc: {
       Server: jest.fn(),
@@ -143,8 +65,6 @@ jest.mock("@stellar/stellar-sdk", () => {
   };
 });
 
-import * as StellarSdk from "@stellar/stellar-sdk";
-
 const isSimulationError = StellarSdk.SorobanRpc.Api
   .isSimulationError as unknown as jest.Mock;
 const isSimulationRestore = StellarSdk.SorobanRpc.Api
@@ -152,7 +72,14 @@ const isSimulationRestore = StellarSdk.SorobanRpc.Api
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-const DUMMY_XDR = "AAAAAA==";
+const DUMMY_XDR = INVALID_XDR_BYTES;
+
+const mockSimulateTransaction = jest.fn();
+const mockGetLedgerEntries = jest.fn();
+const mockServer = {
+  simulateTransaction: mockSimulateTransaction,
+  getLedgerEntries: mockGetLedgerEntries,
+};
 
 function makeSuccessResponse() {
   return {
@@ -162,8 +89,10 @@ function makeSuccessResponse() {
   };
 }
 
-const isSimulationError = StellarSdk.SorobanRpc.Api.isSimulationError as unknown as jest.Mock;
-const isSimulationRestore = StellarSdk.SorobanRpc.Api.isSimulationRestore as unknown as jest.Mock;
+const isSimulationError = StellarSdk.SorobanRpc.Api
+  .isSimulationError as unknown as jest.Mock;
+const isSimulationRestore = StellarSdk.SorobanRpc.Api
+  .isSimulationRestore as unknown as jest.Mock;
 
 // ── Tests ────────────────────────────────────────────────────────────────────
 
@@ -257,19 +186,13 @@ describe("simulateTransaction", () => {
   });
 
   it("uses mainnet network config when network is mainnet", async () => {
-<<<<<<< ours
-<<<<<<< ours
-=======
-    const { getRpcServer } = jest.requireMock("@config/stellar");
->>>>>>> theirs
-=======
-    const { getRpcServer } = jest.requireMock("@config/stellar");
->>>>>>> theirs
+    const { getRpcServer: mockGetRpcServer } =
+      jest.requireMock("@config/stellar");
     mockSimulateTransaction.mockResolvedValue(makeSuccessResponse());
 
     await simulateTransaction(DUMMY_XDR, "mainnet");
 
-    expect(getRpcServer).toHaveBeenCalledWith("mainnet");
+    expect(mockGetRpcServer).toHaveBeenCalledWith("mainnet");
   });
 
   // ── Fixture-based tests ───────────────────────────────────────────────────

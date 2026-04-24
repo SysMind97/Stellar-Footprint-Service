@@ -3,35 +3,7 @@ const http = require("http");
 const options = {
   host: "localhost",
   port: process.env.PORT || 3000,
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
   path: "/api/health",
-=======
-  path: '/api/health',
->>>>>>> theirs
-=======
-  path: '/api/health',
->>>>>>> theirs
-=======
-  path: "/health",
->>>>>>> theirs
-=======
-  path: "/health",
->>>>>>> theirs
-=======
-  path: "/health",
->>>>>>> theirs
-=======
-  path: "/health",
->>>>>>> theirs
-=======
-  path: '/api/health',
->>>>>>> theirs
   timeout: 2000,
 };
 
@@ -45,23 +17,10 @@ const request = http.request(options, (res) => {
 });
 
 request.on("error", (err) => {
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-  console.error("ERROR:", err.message);
-=======
   console.log("ERROR:", err.message);
->>>>>>> theirs
-=======
   console.log("ERROR:", err.message);
->>>>>>> theirs
-=======
   console.error("ERROR:", err.message);
->>>>>>> theirs
-=======
   console.error("ERROR:", err.message);
->>>>>>> theirs
   process.exit(1);
 });
 

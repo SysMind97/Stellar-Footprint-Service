@@ -76,11 +76,6 @@ export class CircuitBreaker {
   }
 }
 
-<<<<<<< ours
-export const rpcCircuitBreaker = new CircuitBreaker({
-  failureThreshold: parseInt(process.env.CB_FAILURE_THRESHOLD ?? "5", 10),
-  recoveryTimeMs: parseInt(process.env.CB_RECOVERY_MS ?? "30000", 10),
-=======
 const DEFAULT_FAILURE_THRESHOLD = 5;
 const DEFAULT_RECOVERY_TIME_MS = 30_000;
 
@@ -103,5 +98,4 @@ const rpcRecoveryTimeMs = Number.isFinite(parsedRecoveryTimeMs)
 export const rpcCircuitBreaker = new CircuitBreaker({
   failureThreshold: rpcFailureThreshold,
   recoveryTimeMs: rpcRecoveryTimeMs,
->>>>>>> theirs
 });
